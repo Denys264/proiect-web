@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css')}}">
+    <script src="{{ url_for('static', filename='scripts/login.json')}}"></script>
+    <title>Home</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <main>
+        <!-- left container-->
+        <div class="container">
+            <!-- greeting the user-->
+            <div class="header">
+                <br>
+                <h1>Hello {{user.username}}</h1>
+            </div>
+            <!-- log out button-->
+            <div class="logoutbutton">
+                <a href="/logout" style="text-decoration:none;" class="culoare">Log out</a>
+            </div>    
+        </div> 
+        <!-- chatbox-->
+        <div class="chatcontainer">
+            <!-- chatbox-->
+            <div class="chatbox">
+                <!-- text zone-->
+                {% for mesaj in mesaje %}
+                    {% if user.username == mesaj.user.username %}
+                        <div class="messagebox dreapta">
+                            <p class="text">{{ mesaj.text }}</p>
+                            
+                            <p class="username"> by {{ mesaj.user.username }}</p>
+                            <p class="date">{{ mesaj.date_created }}</p>
+                            
+                        </div>
+                    {% else %}
+                        <div class="messagebox stanga">
+                            <p class="text">{{ mesaj.text }}</p>
+                            
+                            <p class="username">by {{ mesaj.user.username }}</p>
+                            <p class="date">{{ mesaj.date_created }}</p>
+                            
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <br>
+                <br>
+                
+            </div>
+            <div class="textcontainer">
+                <form method="POST">
+                    <input type="text" name="message" placeholder="Type a message...">
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
